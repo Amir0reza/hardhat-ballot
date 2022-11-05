@@ -40,12 +40,12 @@ const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "key"
 
 const config: HardhatUserConfig = {
   solidity: "0.8.17",
-  defaultNetwork: "localhost",
+  defaultNetwork: "hardhat",
   networks: {
     hardhat: {},
     goerli: {
       url: GOERLI_RPC_URL,
-      accounts: [PRIVATE_KEY, PRIVATE_KEY1, PRIVATE_KEY2],
+      accounts: [PRIVATE_KEY],
       chainId: 5,
     },
     localhost: {
@@ -66,6 +66,9 @@ const config: HardhatUserConfig = {
       default: 0,
       5: 0, // ==> for example for goerli chainId it's second account
     },
+  },
+  etherscan: {
+    apiKey: ETHERSCAN_API_KEY,
   },
 }
 
