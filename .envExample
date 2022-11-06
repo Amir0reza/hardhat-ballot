@@ -1,0 +1,10 @@
+GOERLI_RPC_URL = "Your RPC URL"
+ETHERSCAN_API_KEY = "API Key"
+COINMARKETCAP_API_KEY = "API Key"
+
+give_right_to = 0x70997970c51812dc3a010c7d01b50e0d17dc79c8 // first you need to give right to vote to the voter
+
+voter = 0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d // this is private key of the voter address
+proposalIndex = 2
+
+delegateTo=0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC // must first give right to vote to this

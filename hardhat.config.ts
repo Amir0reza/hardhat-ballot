@@ -12,28 +12,24 @@ import fs from "fs-extra"
 import { ethers } from "ethers"
 
 const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL!.toString()
-
 const encryptedJson =
   fs.readFileSync("./encrypted-publicTest.json", "utf8") || "emptry"
-let PRIVATE_KEY: string, PRIVATE_KEY1: string, PRIVATE_KEY2: string
+let PRIVATE_KEY: string, PRIVATE_KEY1: string
 const PASSWORD: string = process.env.WAL_PASS || "No pass provided"
+
 if (PASSWORD != "No pass provided") {
   PRIVATE_KEY = ethers.Wallet.fromEncryptedJsonSync(
     encryptedJson,
     PASSWORD
   ).privateKey
-  PRIVATE_KEY1 =
-    "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690c"
-  PRIVATE_KEY2 =
-    "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690e"
 } else {
   PRIVATE_KEY =
-    "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"
-  PRIVATE_KEY1 =
-    "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690c"
-  PRIVATE_KEY2 =
-    "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690e"
+    "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
 }
+
+PRIVATE_KEY1 = process.env.voter
+  ? process.env.voter
+  : "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
 
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY || "key"
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "key"
@@ -45,7 +41,7 @@ const config: HardhatUserConfig = {
     hardhat: {},
     goerli: {
       url: GOERLI_RPC_URL,
-      accounts: [PRIVATE_KEY],
+      accounts: [PRIVATE_KEY, PRIVATE_KEY1],
       chainId: 5,
     },
     localhost: {
@@ -65,6 +61,10 @@ const config: HardhatUserConfig = {
     deployer: {
       default: 0,
       5: 0, // ==> for example for goerli chainId it's second account
+    },
+    voter: {
+      default: 1,
+      5: 1, // ==> for example for goerli chainId it's second account
     },
   },
   etherscan: {
