@@ -32,7 +32,7 @@ if (chainId != 31337) {
       ballot = await ethers.getContract("Ballot", deployer)
     })
 
-    describe("Constructor", async function () {
+    describe("Constructor", function () {
       it("Sets the deployer address as chairperson", async () => {
         const chairperson = await ballot.chairperson()
         expect(chairperson).to.eq(deployer.address)
@@ -62,7 +62,7 @@ if (chainId != 31337) {
       })
     })
 
-    describe("When the chairperson interacts with the giveRightToVote function in the contract", async () => {
+    describe("When the chairperson interacts with the giveRightToVote function in the contract", function () {
       it("Gives right to vote for another address", async function () {
         await ballot.giveRightToVote(voter1.address)
         const voter1VotingWeight = (await ballot.voters(voter1.address)).weight
