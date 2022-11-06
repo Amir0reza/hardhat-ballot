@@ -1,8 +1,7 @@
-import { ethers, getNamedAccounts } from "hardhat"
+import { ethers } from "hardhat"
 
 const main = async () => {
-  const deployer = (await getNamedAccounts()).deployer
-  const ballot = await ethers.getContract("Ballot", deployer)
+  const ballot = await ethers.getContract("Ballot")
 
   const winnerProposalIndex = await ballot.winningProposal()
   const winnerProposal = ethers.utils.parseBytes32String((await ballot.winnerName()))
