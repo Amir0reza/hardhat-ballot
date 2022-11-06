@@ -6,7 +6,7 @@ const main = async (_to: Address) => {
   const ballot = await ethers.getContract("Ballot", deployer)
 
   console.log(`Giving voting rights to ${_to} ...`)
-
+  
   const transactionResponse = await ballot.giveRightToVote(_to)
   await transactionResponse.wait(1)
 
