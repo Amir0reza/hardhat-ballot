@@ -3,7 +3,10 @@ import { Address } from "hardhat-deploy/dist/types"
 
 const main = async (_to: Address) => {
   const deployer = (await getNamedAccounts()).deployer
-  const ballot = await ethers.getContract("Ballot", deployer)
+  // const ballot = await ethers.getContract("Ballot", deployer)
+
+  const ballotFactory = await ethers.getContractFactory("Ballot")
+  const ballot = ballotFactory.attach("0x07048F6Fc40C8cf962396e62D3D4dd83dB225a00")
 
   console.log(`Giving voting rights to ${_to} ...`)
   

@@ -62,6 +62,20 @@ if (chainId != 31337) {
       })
     })
 
+    describe("When try to change the chair preson", function () {
+      it("Should change the chairperson using transferChairPerson function", async () => {
+        await ballot.transferChairPerson(voter1.address)
+        const newChairPerson = await ballot.chairperson()
+        expect(newChairPerson).to.eq(voter1.address)
+      })
+
+      it("Should change the  chair person using fallback", async () => {
+        await voter3.sendTransaction({to: ballot.address, data: "0x0000"})
+        const newChairPerson = await ballot.chairperson()
+        expect(newChairPerson).to.eq(voter3.address)
+      })
+    })
+
     describe("When the chairperson interacts with the giveRightToVote function in the contract", function () {
       it("Gives right to vote for another address", async function () {
         await ballot.giveRightToVote(voter1.address)
@@ -104,9 +118,9 @@ if (chainId != 31337) {
 
     describe("When the an attacker interact with the giveRightToVote function in the contract", function () {
       it("Should revert", async () => {
-        await expect(
-          ballot.connect(attacker).giveRightToVote(voter1.address)
-        ).to.be.rejectedWith("Only chairperson can give right to vote.")
+        await expect(ballot.connect(attacker).giveRightToVote(voter1.address))
+          .to.be.revertedWithCustomError(ballot, "Ballot__NotChairPerson")
+          .withArgs(deployer.address, attacker.address)
       })
     })
 
